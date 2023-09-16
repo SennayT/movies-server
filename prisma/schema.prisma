@@ -28,6 +28,7 @@ model Movie {
   genres           MovieGenre[]
   movieDirectors   MovieDirector[]
   movieProductions MovieProduction[]
+  movieCast        MovieCast[]
 }
 
 model Country {
@@ -56,6 +57,12 @@ model Production {
   name String
 
   movieProductions MovieProduction[]
+}
+
+model Cast {
+  id        String      @id @default(uuid())
+  name      String
+  movieCast MovieCast[]
 }
 
 model MovieCountry {
@@ -96,4 +103,14 @@ model MovieProduction {
   production Production @relation(fields: [productionId], references: [id])
 
   @@id([movieId, productionId])
+}
+
+model MovieCast {
+  movieId String
+  castId  String
+
+  movie Movie @relation(fields: [movieId], references: [id])
+  cast  Cast  @relation(fields: [castId], references: [id])
+
+  @@id([movieId, castId])
 }
