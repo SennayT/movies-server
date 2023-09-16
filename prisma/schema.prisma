@@ -29,6 +29,7 @@ model Movie {
   movieDirectors   MovieDirector[]
   movieProductions MovieProduction[]
   movieCast        MovieCast[]
+  movieTags        MovieTag[]
 }
 
 model Country {
@@ -63,6 +64,12 @@ model Cast {
   id        String      @id @default(uuid())
   name      String
   movieCast MovieCast[]
+}
+
+model Tag {
+  id        String     @id @default(uuid())
+  name      String
+  movieTags MovieTag[]
 }
 
 model MovieCountry {
@@ -113,4 +120,14 @@ model MovieCast {
   cast  Cast  @relation(fields: [castId], references: [id])
 
   @@id([movieId, castId])
+}
+
+model MovieTag {
+  movieId String
+  tagId   String
+
+  movie Movie @relation(fields: [movieId], references: [id])
+  tag   Tag   @relation(fields: [tagId], references: [id])
+
+  @@id([movieId, tagId])
 }
