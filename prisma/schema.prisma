@@ -23,4 +23,23 @@ model Movie {
   release     DateTime
   type        MovieType
   description String
+
+  countries MovieCountry[]
+}
+
+model Country {
+  id   String @id @default(uuid())
+  name String
+
+  movies MovieCountry[]
+}
+
+model MovieCountry {
+  movieId   String
+  countryId String
+
+  movie   Movie   @relation(fields: [movieId], references: [id])
+  country Country @relation(fields: [countryId], references: [id])
+
+  @@id([movieId, countryId])
 }
