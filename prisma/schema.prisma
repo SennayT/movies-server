@@ -9,3 +9,18 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+enum MovieType {
+  Movie
+  Series
+}
+
+model Movie {
+  id          String    @id @default(uuid())
+  name        String
+  image       String
+  length      Int
+  release     DateTime
+  type        MovieType
+  description String
+}
